@@ -22,7 +22,7 @@ def encryptTextVige(inputString, key):
         char = (ord(filteredString[i].upper()) + ord(key[i].upper())) % 26
         char += ord('A')
         result += chr(char)
-    return (result)
+    return result
 
 def decryptTextVige(encryptedString, key):
     result = ""
@@ -31,7 +31,7 @@ def decryptTextVige(encryptedString, key):
         char = (ord(filteredString[i].upper()) - ord(key[i].upper())) % 26
         char += ord('A')
         result += chr(char)
-    return (result)
+    return result
 
 def vigenereStandard(inputString, inputKey):
     key = generateKeyVige(inputString, inputKey)
@@ -47,4 +47,4 @@ def filterAlphabet(inputString):
             alphabet += character
     return alphabet
 
-vigenereStandard("thisplaintext", "sony")
+# vigenereStandard("thisplaintext", "sony")
