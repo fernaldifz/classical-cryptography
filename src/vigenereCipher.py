@@ -1,39 +1,36 @@
 # Vigenere Cipher Standard (26 huruf alfabet)
 
 def generateKeyVige(inputString, inputKey):
-    if len(filterAlphabet(inputString)) == len(inputKey):
+    filteredString = filterAlphabet(inputString)
+    if len(filteredString) == len(inputKey):
         return inputKey
-    elif len(filterAlphabet(inputString)) < len(inputKey):
+    elif len(filteredString) < len(inputKey):
         key = ""
         for i in range(len(inputString)):
             key += inputKey[i]
         return key
     else:
         key = inputKey
-        for i in range(len(filterAlphabet(inputString)) - len(inputKey)):
+        for i in range(len(filteredString) - len(inputKey)):
             key += inputKey[i % len(inputKey)]
         return key
 
 def encryptTextVige(inputString, key):
     result = ""
-    j = 0
-    for i in range(len(inputString)):
-        if(ord(inputString[i].upper()) >= 65 and ord(inputString[i].upper()) <= 90):
-            char = (ord(inputString[i].upper()) + ord(key[j].upper())) % 26
-            char += ord('A')
-            result += chr(char)
-            j += 1
+    filteredString = filterAlphabet(inputString)
+    for i in range(len(filteredString)):
+        char = (ord(filteredString[i].upper()) + ord(key[i].upper())) % 26
+        char += ord('A')
+        result += chr(char)
     return (result)
 
 def decryptTextVige(encryptedString, key):
     result = ""
-    j = 0
-    for i in range(len(encryptedString)):
-        if(ord(encryptedString[i].upper()) >= 65 and ord(encryptedString[i].upper()) <= 90):
-            char = (ord(encryptedString[i].upper()) - ord(key[j].upper())) % 26
-            char += ord('A')
-            result += chr(char)
-            j += 1
+    filteredString = filterAlphabet(encryptedString)
+    for i in range(len(filteredString)):
+        char = (ord(filteredString[i].upper()) - ord(key[i].upper())) % 26
+        char += ord('A')
+        result += chr(char)
     return (result)
 
 def VigenereStandard(inputString, inputKey):
@@ -48,6 +45,6 @@ def filterAlphabet(inputString):
     for character in inputString:
         if character.isalpha():
             alphabet += character
-    return (alphabet)
+    return alphabet
 
-#VigenereStandard("halo!!!disana", "LEMON")
+VigenereStandard("halo!!!disana", "LEMON")
