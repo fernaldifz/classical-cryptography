@@ -6,7 +6,7 @@ def generateKeyVige(inputString, inputKey):
         return inputKey
     elif len(filteredString) < len(inputKey):
         key = ""
-        for i in range(len(inputString)):
+        for i in range(len(filteredString)):
             key += inputKey[i]
         return key
     else:
@@ -47,4 +47,4 @@ def filterAlphabet(inputString):
             alphabet += character
     return alphabet
 
-VigenereStandard("halo!!!disana", "LEMON")
+VigenereStandard("halo!!!disana", "LEMONABCDEFGHIJKLMN")
