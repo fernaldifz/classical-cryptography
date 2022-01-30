@@ -33,12 +33,12 @@ def decryptTextVige(encryptedString, key):
         result += chr(char)
     return (result)
 
-def VigenereStandard(inputString, inputKey):
+def vigenereStandard(inputString, inputKey):
     key = generateKeyVige(inputString, inputKey)
     encryptedString = encryptTextVige(inputString, key)
 
     print("hasil enkripsi: " + encryptedString)
-    print("hasil dekripsi: " + decryptTextVige(encryptedString, key))
+    print("hasil dekripsi: " + decryptTextVige(encryptedString, key).lower())
 
 def filterAlphabet(inputString):
     alphabet = ""
@@ -47,4 +47,4 @@ def filterAlphabet(inputString):
             alphabet += character
     return alphabet
 
-VigenereStandard("halo!!!disana", "LEMONABCDEFGHIJKLMN")
+vigenereStandard("thisplaintext", "sony")
