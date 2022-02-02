@@ -20,10 +20,20 @@ def generateKeyPlayfair(inputString):
 def encryptTextPFC(stringText, stringKey):
     plainText, key, bigramMemory, jMemory = rulesSameRowsEnc(stringText, stringKey)
     plainText, key, bigramMemory = rulesSameColsEnc(plainText, key, bigramMemory)
-    plainText, key, bigramMemory = otherRulesEnc(plainText, key, bigramMemory)
+    plainText, key, bigramMemory = otherRules(plainText, key, bigramMemory)
 
     return plainText, jMemory
 
+def decryptTextPFC(stringKey):
+    cipherText, jMemory = readPFCipherFile()
+    plainText, key, bigramMemory = rulesSameRowsDec(cipherText, stringKey)
+    plainText, key, bigramMemory = rulesSameColsDec(plainText, key, bigramMemory)
+    plainText, key, bigramMemory = otherRules(plainText, key, bigramMemory)
+
+    plainText = reverseClean(plainText, jMemory)
+
+    return plainText
+    
 def matrixFactory(inputString):
     stringPFC = cleanTextAlphabet(inputString)
     jMemory = []; counter = 0
@@ -42,9 +52,6 @@ def matrixFactory(inputString):
             counter += 1
 
     return matrixPFC, jMemory
-
-def decryptTextPFC(inputString):
-    pass
 
 def filterAlphabet(inputString):
     alphabet = ""
@@ -90,6 +97,14 @@ def cleanTextAlphabet(inputString):
 
     return cleanAlphabet
 
+def reverseClean(inputMatrix, jMemory):
+    for index in jMemory:
+        inputMatrix[int(index) // 2][int(index) % 2] = 'J'
+    
+    cipherText = toText(inputMatrix)
+
+    return cipherText
+    
 def rulesSameRowsEnc(stringText, stringKey):
     key = generateKeyPlayfair(stringKey)
     plainText, jMemory = matrixFactory(stringText)
@@ -106,8 +121,20 @@ def rulesSameRowsEnc(stringText, stringKey):
 
     return plainText, key, bigramMemory, jMemory
 
-def rulesSameRowsDec(plainText, key, bigramMemory):
-    pass
+def rulesSameRowsDec(chiperText, stringKey):
+    key = generateKeyPlayfair(stringKey)
+    plainText, jMemory = matrixFactory(chiperText)
+    bigramMemory = []
+
+    for row in range(0, len(plainText)):
+        for col in range(0,1):
+            for keyRow in range(0,5):
+                if (plainText[row][col] in key[keyRow]) and (plainText[row][col+1] in key[keyRow]):
+                    plainText[row][col] = key[keyRow][(key[keyRow].index(plainText[row][col])-1)%5]
+                    plainText[row][col+1] = key[keyRow][(key[keyRow].index(plainText[row][col+1])-1)%5]
+                    bigramMemory.append(row)
+
+    return plainText, key, bigramMemory
 
 def rulesSameColsEnc(plainText, key, bigramMemory):
     counter = 0
@@ -130,7 +157,28 @@ def rulesSameColsEnc(plainText, key, bigramMemory):
 
     return plainText,key, bigramMemory
 
-def otherRulesEnc(plainText, key, bigramMemory):
+def rulesSameColsDec(plainText, key, bigramMemory):
+    counter = 0
+
+    while counter != len(key):
+        listBank = []
+
+        for keyCol in range(counter,counter+1):
+            for keyRow in range(0,5):
+                listBank.append(key[keyRow][keyCol])             
+
+        for row in range(0, len(plainText)):
+            for col in range(0,1):
+                if (plainText[row][col] in listBank) and (plainText[row][col+1] in listBank):
+                    plainText[row][col] = listBank[(listBank.index(plainText[row][col])-1)%5]
+                    plainText[row][col+1] = listBank[(listBank.index(plainText[row][col+1])-1)%5]
+                    bigramMemory.append(row)
+        
+        counter += 1
+
+    return plainText,key, bigramMemory
+
+def otherRules(plainText, key, bigramMemory):
     for row in range(0, len(plainText)):
         if row in bigramMemory:
             pass
@@ -151,14 +199,14 @@ def otherRulesEnc(plainText, key, bigramMemory):
 
     return plainText, key, bigramMemory
 
-def toCipherText(plainTextPFC):
-    cipherText = ""
+def toText(plainTextPFC):
+    text = ""
 
     for row in range(0,len(plainTextPFC)):
         for col in range(0,2):
-            cipherText += plainTextPFC[row][col]
+            text += plainTextPFC[row][col]
 
-    return cipherText
+    return text
 
 def toFileTXT(cipherText, jMemory):
     file = open("./text/PFCipher.txt", "w")
@@ -168,10 +216,27 @@ def toFileTXT(cipherText, jMemory):
     file.close()
 
 def readPFCipherFile():
-    file = open("./text/PFCipher.txt", "w")
+    file = open("./text/PFCipher.txt", "r")
+    arrLineFile = file.readlines()
+    cipherText = ""; jMemory = []
+
+    for row in range(0,len(arrLineFile)):
+        if row == 0:
+            cipherText = "".join(arrLineFile[row].rstrip())
+        else:
+            jMemory.append("".join(arrLineFile[row].rstrip()))
+    
+    file.close()
+
+    return cipherText, jMemory
 
 # print(cleanTextAlphabet("temuiibunantimalamxx"))
 # print(encryptTextPFC("temuiibunantimalamjx", "hai"))
-p, j = encryptTextPFC("temuiibunantijmajlam", "jalan ganesha sepuluh")
-c = toCipherText(p)
+p, j = encryptTextPFC("temuiibunantimaljam", "jalan ganesha sepuluh")
+c = toText(p)
+print(c)
 toFileTXT(c,j)
+# print(readPFCipherFile())
+plain = decryptTextPFC("jalan ganesha sepuluh")
+print(plain)
+
