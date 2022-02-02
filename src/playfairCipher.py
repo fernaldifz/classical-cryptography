@@ -18,14 +18,11 @@ def generateKeyPlayfair(inputString):
     return squareKey
 
 def encryptTextPFC(stringText, stringKey):
-    key = generateKeyPlayfair(stringKey)
-    plainText, jMemory = matrixFactory(stringText)
+    plainText, key, bigramMemory, jMemory = rulesSameRowsEnc(stringText, stringKey)
+    plainText, key, bigramMemory = rulesSameColsEnc(plainText, key, bigramMemory)
+    plainText, key, bigramMemory = otherRulesEnc(plainText, key, bigramMemory)
 
-    for row in range(0,len(plainText)):
-        for col in range(0,2):
-            plainText[row][col]
-
-
+    return plainText, jMemory
 
 def matrixFactory(inputString):
     stringPFC = cleanTextAlphabet(inputString)
@@ -107,7 +104,10 @@ def rulesSameRowsEnc(stringText, stringKey):
                     plainText[row][col+1] = key[keyRow][(key[keyRow].index(plainText[row][col+1])+1)%5]
                     bigramMemory.append(row)
 
-    return plainText, key, bigramMemory
+    return plainText, key, bigramMemory, jMemory
+
+def rulesSameRowsDec(plainText, key, bigramMemory):
+    pass
 
 def rulesSameColsEnc(plainText, key, bigramMemory):
     counter = 0
@@ -151,9 +151,27 @@ def otherRulesEnc(plainText, key, bigramMemory):
 
     return plainText, key, bigramMemory
 
-                
+def toCipherText(plainTextPFC):
+    cipherText = ""
+
+    for row in range(0,len(plainTextPFC)):
+        for col in range(0,2):
+            cipherText += plainTextPFC[row][col]
+
+    return cipherText
+
+def toFileTXT(cipherText, jMemory):
+    file = open("./text/PFCipher.txt", "w")
+    file.write(cipherText+'\n')
+    for number in jMemory:
+        file.write(str(number)+'\n')
+    file.close()
+
+def readPFCipherFile():
+    file = open("./text/PFCipher.txt", "w")
+
 # print(cleanTextAlphabet("temuiibunantimalamxx"))
 # print(encryptTextPFC("temuiibunantimalamjx", "hai"))
-p,k,b= rulesSameRowsEnc("temuiibunantimalam", "jalan ganesha sepuluh")
-p,k,b= rulesSameColsEnc(p,k,b)
-print(otherRulesEnc(p,k,b))
+p, j = encryptTextPFC("temuiibunantijmajlam", "jalan ganesha sepuluh")
+c = toCipherText(p)
+toFileTXT(c,j)
