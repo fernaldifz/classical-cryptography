@@ -1,4 +1,4 @@
-from numpy import matrix
+#
 
 def generateKeyPlayfair(inputString):
     keyString = cleanKeyAlphabet(inputString)
@@ -17,22 +17,34 @@ def generateKeyPlayfair(inputString):
     
     return squareKey
 
-def encryptTextPFC(inputString):
-    pass
+def encryptTextPFC(stringText, stringKey):
+    key = generateKeyPlayfair(stringKey)
+    plainText, jMemory = matrixFactory(stringText)
+
+    for row in range(0,len(plainText)):
+        for col in range(0,2):
+            plainText[row][col]
+
+
 
 def matrixFactory(inputString):
     stringPFC = cleanTextAlphabet(inputString)
-    counter = 0
+    jMemory = []; counter = 0
 
     matrixRow = len(stringPFC) // 2
     matrixPFC = [[j for j in range(0,2)] for i in range(0,matrixRow)]
     
     for row in range(0,matrixRow):
         for col in range(0,2):
-            matrixPFC[row][col] = stringPFC[counter]
+            if stringPFC[counter] == 'J':
+                jMemory.append(counter)
+                matrixPFC[row][col] = 'I'
+            else:
+                matrixPFC[row][col] = stringPFC[counter]
+
             counter += 1
 
-    return matrixPFC
+    return matrixPFC, jMemory
 
 def decryptTextPFC(inputString):
     pass
@@ -59,19 +71,89 @@ def cleanKeyAlphabet(inputString):
 
 def cleanTextAlphabet(inputString):
     cleanAlphabet = ""
-    processing = True
-    counter = 0
     alphabet = filterAlphabet(inputString)
-
-    # for character in alphabet:
-    #     cleanAlphabet += character
-        # temuiibu
-    while processing:
-        for i in range(0,len(alphabet)):
-            pass
+    
+    if (len(alphabet) % 2) == 0:
+        for i in range(0,len(alphabet),2):
+            if alphabet[i] == alphabet[i+1]:
+                cleanAlphabet += alphabet[i] + 'X' + alphabet[i+1]
+            else:
+                cleanAlphabet += alphabet[i] + alphabet[i+1]
+    else:
+        for i in range(0,len(alphabet)+1,2):
+            if i == (len(alphabet)-1):
+                cleanAlphabet += alphabet[i] 
+            elif alphabet[i] == alphabet[i+1]:
+                cleanAlphabet += alphabet[i] + 'X' + alphabet[i+1]
+            else:
+                cleanAlphabet += alphabet[i] + alphabet[i+1]
 
     if (len(cleanAlphabet) % 2) == 1:
         cleanAlphabet += 'X'
 
     return cleanAlphabet
 
+def rulesSameRowsEnc(stringText, stringKey):
+    key = generateKeyPlayfair(stringKey)
+    plainText, jMemory = matrixFactory(stringText)
+    bigramMemory = []
+
+    for row in range(0, len(plainText)):
+        for col in range(0,1):
+            for keyRow in range(0,5):
+                # pass
+                if (plainText[row][col] in key[keyRow]) and (plainText[row][col+1] in key[keyRow]):
+                    plainText[row][col] = key[keyRow][(key[keyRow].index(plainText[row][col])+1)%5]
+                    plainText[row][col+1] = key[keyRow][(key[keyRow].index(plainText[row][col+1])+1)%5]
+                    bigramMemory.append(row)
+
+    return plainText, key, bigramMemory
+
+def rulesSameColsEnc(plainText, key, bigramMemory):
+    counter = 0
+
+    while counter != len(key):
+        listBank = []
+
+        for keyCol in range(counter,counter+1):
+            for keyRow in range(0,5):
+                listBank.append(key[keyRow][keyCol])             
+
+        for row in range(0, len(plainText)):
+            for col in range(0,1):
+                if (plainText[row][col] in listBank) and (plainText[row][col+1] in listBank):
+                    plainText[row][col] = listBank[(listBank.index(plainText[row][col])+1)%5]
+                    plainText[row][col+1] = listBank[(listBank.index(plainText[row][col+1])+1)%5]
+                    bigramMemory.append(row)
+        
+        counter += 1
+
+    return plainText,key, bigramMemory
+
+def otherRulesEnc(plainText, key, bigramMemory):
+    for row in range(0, len(plainText)):
+        if row in bigramMemory:
+            pass
+        else:
+            tmpMemory = []
+            for col in range(0,2):
+                for keyRow in range(0,5):
+                    for keyCol in range(0,5):
+                        if(plainText[row][col] == key[keyRow][keyCol]):
+                            tmpMemory.append(row)
+                            tmpMemory.append(col)
+                            tmpMemory.append(keyRow)
+                            tmpMemory.append(keyCol)
+                
+                if len(tmpMemory) == 8:
+                    plainText[tmpMemory[0]][tmpMemory[1]] = key[tmpMemory[2]][tmpMemory[7]]
+                    plainText[tmpMemory[4]][tmpMemory[5]] = key[tmpMemory[6]][tmpMemory[3]]
+
+    return plainText, key, bigramMemory
+
+                
+# print(cleanTextAlphabet("temuiibunantimalamxx"))
+# print(encryptTextPFC("temuiibunantimalamjx", "hai"))
+p,k,b= rulesSameRowsEnc("temuiibunantimalam", "jalan ganesha sepuluh")
+p,k,b= rulesSameColsEnc(p,k,b)
+print(otherRulesEnc(p,k,b))
