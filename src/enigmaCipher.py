@@ -28,6 +28,6 @@ def saveEncryption(string):
     file.write(string)
     file.close()
 
-# machine = initEnigma('II IV V', [2, 18, 7], 'B', 'AV BS CG DL FU HZ IN KM OW RX')
-# saveEncryption(enigma(machine, 'WXC', 'KCH', 'SAYA KE ITB KEMARIN!!'))
-# print(enigma(machine, 'WXC', 'KCH', 'RKBNUTBJUIFAIYKLERJAT'))
+machine = initEnigma('II IV V', [2, 18, 7], 'B', 'AV BS CG DL FU HZ IN KM OW RX')
+saveEncryption(enigma(machine, 'WXC', 'KCH', 'SAYAKEITBKEMARIN'))
+print(enigma(machine, 'WXC', 'KCH', 'RKBNLUXSLUWRCAXU'))

@@ -13,6 +13,7 @@ class menuScreen(QDialog):
         self.vigenere.clicked.connect(self.gotoVigenere)
         self.vigenere_ext.clicked.connect(self.gotoVigenereExt)
         self.one_time_pad.clicked.connect(self.gotoOTPEnc)
+        self.enigma.clicked.connect(self.gotoEnigma)
     
     def gotoPlayfair(self):
         playfairEnc = playfairCipherEnc()
@@ -32,6 +33,11 @@ class menuScreen(QDialog):
     def gotoOTPEnc(self):
         OTPEncr = OTPEnc()
         widget.addWidget(OTPEncr)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def gotoEnigma(self):
+        enigmaEnc = enigmaCipherEnc()
+        widget.addWidget(enigmaEnc)
         widget.setCurrentIndex(widget.currentIndex()+1)
     
 class playfairCipherEnc(QDialog):
@@ -170,6 +176,39 @@ class OTPDec(QDialog):
         widget.addWidget(OTPEncr)
         widget.setCurrentIndex(widget.currentIndex()+1)
 
+class enigmaCipherEnc(QDialog):
+    def __init__(self):
+        super(enigmaCipherEnc, self).__init__()
+        loadUi("enigmaCipherEnc.ui", self)
+        self.menu.clicked.connect(self.gotoMenu)
+        self.decrypt.clicked.connect(self.gotoEnigmaDec)
+    
+    def gotoMenu(self):
+        menu = menuScreen()
+        widget.addWidget(menu)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def gotoEnigmaDec(self):
+        enigmaDec = enigmaCipherDec()
+        widget.addWidget(enigmaDec)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+class enigmaCipherDec(QDialog):
+    def __init__(self):
+        super(enigmaCipherDec, self).__init__()
+        loadUi("enigmaCipherDec.ui", self)
+        self.menu.clicked.connect(self.gotoMenu)
+        self.encrypt.clicked.connect(self.gotoEnigmaEnc)
+    
+    def gotoMenu(self):
+        menu = menuScreen()
+        widget.addWidget(menu)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+    
+    def gotoEnigmaEnc(self):
+        enigmaEnc = enigmaCipherEnc()
+        widget.addWidget(enigmaEnc)
+        widget.setCurrentIndex(widget.currentIndex()+1)
 
 def suppress_qt_warnings():
     environ["QT_DEVICE_PIXEL_RATIO"] = "0"
