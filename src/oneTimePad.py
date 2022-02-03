@@ -1,3 +1,5 @@
+# One-time pad (26 huruf alfabet)
+
 import random
 import string
 
