@@ -1,3 +1,5 @@
+# Enigma Cipher dengan 3-rotor (26 huruf alfabet)
+
 from enigma.machine import EnigmaMachine
 
 def initEnigma(wheelOrder, ringSettings, reflector, plugboardSettings):
@@ -9,9 +11,9 @@ def initEnigma(wheelOrder, ringSettings, reflector, plugboardSettings):
     )
     return machine
 
-def enigma(machine, initPosition, messageKey, encryptedText):
+def enigma(machine, initPosition, messageKeyUnprocessed, encryptedText):
     machine.set_display(initPosition)
-    messageKey = machine.process_text(messageKey)
+    messageKey = machine.process_text(messageKeyUnprocessed)
     machine.set_display(messageKey)
 
     text = machine.process_text(encryptedText, replace_char='Z')
@@ -21,5 +23,11 @@ def enigma(machine, initPosition, messageKey, encryptedText):
 def rotorPosition(machine):
     return machine.get_display()
 
-machine = initEnigma('II IV V', [2, 18, 7], 'B', 'AV BS CG DL FU HZ IN KM OW RX')
-print(enigma(machine, 'WXC', 'KCH', 'RKBNUTBJUIFAIYKLERJ'))
+def saveEncryption(string):
+    file = open("./text/cipherTextEnigma.txt", "w")
+    file.write(string)
+    file.close()
+
+# machine = initEnigma('II IV V', [2, 18, 7], 'B', 'AV BS CG DL FU HZ IN KM OW RX')
+# saveEncryption(enigma(machine, 'WXC', 'KCH', 'SAYA KE ITB KEMARIN!!'))
+# print(enigma(machine, 'WXC', 'KCH', 'SAYA KE ITB KEMARIN!!'))
