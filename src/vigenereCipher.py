@@ -31,14 +31,16 @@ def decryptTextVige(encryptedString, key):
         char = (ord(filteredString[i].upper()) - ord(key[i].upper())) % 26
         char += ord('A')
         result += chr(char)
-    return result
+    return result.lower()
 
 def vigenereStandard(inputString, inputKey):
     key = generateKeyVige(inputString, inputKey)
     encryptedString = encryptTextVige(inputString, key)
 
+    saveCipher(encryptedString)
+
     print("hasil enkripsi: " + encryptedString)
-    print("hasil dekripsi: " + decryptTextVige(encryptedString, key).lower())
+    print("hasil dekripsi: " + decryptTextVige(encryptedString, key))
 
 def filterAlphabet(inputString):
     alphabet = ""
@@ -46,5 +48,10 @@ def filterAlphabet(inputString):
         if character.isalpha():
             alphabet += character
     return alphabet
+
+def saveCipher(encryptedString):
+    file = open("./text/VigenereCipher.txt", "w")
+    file.write(encryptedString)
+    file.close()
 
 # vigenereStandard("thisplaintext", "sony")
