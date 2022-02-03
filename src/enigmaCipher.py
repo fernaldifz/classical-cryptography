@@ -24,10 +24,10 @@ def rotorPosition(machine):
     return machine.get_display()
 
 def saveEncryption(string):
-    file = open("./text/cipherTextEnigma.txt", "w")
+    file = open("./text/enigmaCipher.txt", "w")
     file.write(string)
     file.close()
 
 # machine = initEnigma('II IV V', [2, 18, 7], 'B', 'AV BS CG DL FU HZ IN KM OW RX')
 # saveEncryption(enigma(machine, 'WXC', 'KCH', 'SAYA KE ITB KEMARIN!!'))
-# print(enigma(machine, 'WXC', 'KCH', 'SAYA KE ITB KEMARIN!!'))
+# print(enigma(machine, 'WXC', 'KCH', 'RKBNUTBJUIFAIYKLERJAT'))
