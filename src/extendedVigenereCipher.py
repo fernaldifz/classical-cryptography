@@ -19,7 +19,6 @@ def encryptTextExtendedVige(inputString, key):
     for i in range(len(inputString)):
         char = (ord(inputString[i]) + ord(key[i])) % 256
         result += chr(char)
-        print(char)
     return result
 
 def decryptTextExtendedVige(encryptedString, key):
@@ -29,9 +28,16 @@ def decryptTextExtendedVige(encryptedString, key):
         result += chr(char)
     return result
 
+def saveCipher(encryptedString):
+    file = open("./text/extendedVigenereCipher.txt", "w")
+    file.write(encryptedString)
+    file.close()
+
 def extendedVigenere(inputString, inputKey):
     key = generateKeyExtendedVige(inputString, inputKey)
     encryptedString = encryptTextExtendedVige(inputString, key)
+
+    saveCipher(encryptedString)
 
     print("hasil enkripsi: " + encryptedString)
     print("hasil dekripsi: " + decryptTextExtendedVige(encryptedString, key))
