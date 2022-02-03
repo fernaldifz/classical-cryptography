@@ -30,19 +30,17 @@ def decryptTextOTP(encryptedString, key):
         char = (ord(filteredString[i].upper()) - ord(key[i].upper())) % 26
         char += ord('A')
         result += chr(char)
-    return result
+    return result.lower()
 
 def OTP(inputString):
     createKeyOTP()
     key = getKeyOTP()
     encryptedString = encryptTextOTP(inputString, key)
 
-    print("hasil enkripsi: " + encryptedString)
-    print("hasil dekripsi: " + decryptTextOTP(encryptedString, key).lower())
+    saveCipher(encryptedString)
 
-    file = open("./text/cipherTextOTP.txt", "w")
-    file.write(encryptedString)
-    file.close()
+    print("hasil enkripsi: " + encryptedString)
+    print("hasil dekripsi: " + decryptTextOTP(encryptedString, key))
 
 def filterAlphabet(inputString):
     alphabet = ""
@@ -50,5 +48,10 @@ def filterAlphabet(inputString):
         if character.isalpha():
             alphabet += character
     return alphabet
+
+def saveCipher(encryptedString):
+    file = open("./text/OTPCipher.txt", "w")
+    file.write(encryptedString)
+    file.close()
 
 OTP("saya senang dan bahagia berkuliah di ITB")
