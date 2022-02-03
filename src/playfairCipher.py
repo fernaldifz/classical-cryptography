@@ -1,5 +1,3 @@
-#
-
 def generateKeyPlayfair(inputString):
     keyString = cleanKeyAlphabet(inputString)
     upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -34,7 +32,7 @@ def decryptTextPFC(stringKey):
 
     return plainText
     
-def matrixFactory(inputString):
+def matrixFactoryEnc(inputString):
     stringPFC = cleanTextAlphabet(inputString)
     jMemory = []; counter = 0
 
@@ -48,6 +46,24 @@ def matrixFactory(inputString):
                 matrixPFC[row][col] = 'I'
             else:
                 matrixPFC[row][col] = stringPFC[counter]
+
+            counter += 1
+
+    return matrixPFC, jMemory
+
+def matrixFactoryDec(cipherText):
+    jMemory = []; counter = 0
+
+    matrixRow = len(cipherText) // 2
+    matrixPFC = [[j for j in range(0,2)] for i in range(0,matrixRow)]
+    
+    for row in range(0,matrixRow):
+        for col in range(0,2):
+            if cipherText[counter] == 'J':
+                jMemory.append(counter)
+                matrixPFC[row][col] = 'I'
+            else:
+                matrixPFC[row][col] = cipherText[counter]
 
             counter += 1
 
@@ -76,6 +92,8 @@ def cleanKeyAlphabet(inputString):
 def cleanTextAlphabet(inputString):
     cleanAlphabet = ""
     alphabet = filterAlphabet(inputString)
+
+    savePlainTextPFC(alphabet)
     
     if (len(alphabet) % 2) == 0:
         for i in range(0,len(alphabet),2):
@@ -98,16 +116,29 @@ def cleanTextAlphabet(inputString):
     return cleanAlphabet
 
 def reverseClean(inputMatrix, jMemory):
+    cleanText = ""
+
     for index in jMemory:
         inputMatrix[int(index) // 2][int(index) % 2] = 'J'
     
+    for row in range(0, len(inputMatrix)):
+        for col in range(0,1):
+            if (inputMatrix[row][col+1] == 'X') and (row != (len(inputMatrix)-1)):
+                if inputMatrix[row][col] == inputMatrix[row+1][col]:
+                    inputMatrix[row][col+1] = ''
+    
     cipherText = toText(inputMatrix)
 
-    return cipherText
+    plainText = readPlainText()
+
+    for index in range(0,len(plainText)):
+        cleanText += cipherText[index]
+
+    return cleanText
     
 def rulesSameRowsEnc(stringText, stringKey):
     key = generateKeyPlayfair(stringKey)
-    plainText, jMemory = matrixFactory(stringText)
+    plainText, jMemory = matrixFactoryEnc(stringText)
     bigramMemory = []
 
     for row in range(0, len(plainText)):
@@ -123,7 +154,7 @@ def rulesSameRowsEnc(stringText, stringKey):
 
 def rulesSameRowsDec(chiperText, stringKey):
     key = generateKeyPlayfair(stringKey)
-    plainText, jMemory = matrixFactory(chiperText)
+    plainText, jMemory = matrixFactoryDec(chiperText)
     bigramMemory = []
 
     for row in range(0, len(plainText)):
@@ -230,13 +261,25 @@ def readPFCipherFile():
 
     return cipherText, jMemory
 
+def savePlainTextPFC(plainText):
+    file = open("./text/PFCText.txt", "w")
+    file.write(plainText)
+    file.close()
+
+def readPlainText():
+    file = open("./text/PFCText.txt", "r")
+    plainText = file.readlines()
+    file.close()
+
+    return plainText[0]
+
+
+
 # print(cleanTextAlphabet("temuiibunantimalamxx"))
 # print(encryptTextPFC("temuiibunantimalamjx", "hai"))
-p, j = encryptTextPFC("temuiibunantimaljam", "jalan ganesha sepuluh")
-c = toText(p)
-print(c)
-toFileTXT(c,j)
-# print(readPFCipherFile())
-plain = decryptTextPFC("jalan ganesha sepuluh")
-print(plain)
-
+# p, j = encryptTextPFC("temuiijbunantimajlam", "jalan ganesha sepuluh")
+# c = toText(p)
+# print(c)
+# toFileTXT(c,j)
+# plain = decryptTextPFC("jalan ganesha sepuluh")
+# print(plain)

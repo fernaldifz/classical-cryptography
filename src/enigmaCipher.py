@@ -21,5 +21,5 @@ def enigma(machine, initPosition, messageKey, encryptedText):
 def rotorPosition(machine):
     return machine.get_display()
 
-# machine = initEnigma('II IV V', [2, 18, 7], 'B', 'AV BS CG DL FU HZ IN KM OW RX')
-# print(enigma(machine, 'WXC', 'KCH', 'RKBNUTBJUIFAIYKLERJ'))
+machine = initEnigma('II IV V', [2, 18, 7], 'B', 'AV BS CG DL FU HZ IN KM OW RX')
+print(enigma(machine, 'WXC', 'KCH', 'RKBNUTBJUIFAIYKLERJ'))
