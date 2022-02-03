@@ -9,9 +9,9 @@ def initEnigma(wheelOrder, ringSettings, reflector, plugboardSettings):
     )
     return machine
 
-def enigma(machine, initPosition, messageKey, encryptedText):
+def enigma(machine, initPosition, messageKeyUnprocessed, encryptedText):
     machine.set_display(initPosition)
-    messageKey = machine.process_text(messageKey)
+    messageKey = machine.process_text(messageKeyUnprocessed)
     machine.set_display(messageKey)
 
     text = machine.process_text(encryptedText, replace_char='Z')
