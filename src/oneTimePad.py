@@ -54,4 +54,4 @@ def saveCipher(encryptedString):
     file.write(encryptedString)
     file.close()
 
-OTP("saya senang dan bahagia berkuliah di ITB")
+# OTP("saya senang dan bahagia berkuliah di ITB")
