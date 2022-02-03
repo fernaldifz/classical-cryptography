@@ -33,6 +33,10 @@ def extendedVigenere(inputString, inputKey):
     key = generateKeyExtendedVige(inputString, inputKey)
     encryptedString = encryptTextExtendedVige(inputString, key)
 
+    file = open("./text/cipherTextExtendedVigenere.txt", "w")
+    file.write(encryptedString)
+    file.close()
+
     print("hasil enkripsi: " + encryptedString)
     print("hasil dekripsi: " + decryptTextExtendedVige(encryptedString, key))
 

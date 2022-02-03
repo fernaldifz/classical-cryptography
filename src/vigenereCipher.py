@@ -37,6 +37,10 @@ def vigenereStandard(inputString, inputKey):
     key = generateKeyVige(inputString, inputKey)
     encryptedString = encryptTextVige(inputString, key)
 
+    file = open("./text/cipherTextVigenere.txt", "w")
+    file.write(encryptedString)
+    file.close()
+
     print("hasil enkripsi: " + encryptedString)
     print("hasil dekripsi: " + decryptTextVige(encryptedString, key).lower())
 
