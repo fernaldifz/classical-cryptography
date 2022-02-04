@@ -189,7 +189,7 @@ color: #101920;</string>
      <string>Decrypt !</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="chipertext">
+   <widget class="QTextEdit" name="ciphertext">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -379,6 +379,52 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="autodecrypt">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>410</y>
+      <width>83</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: #FFE715;
+border-radius: 2px;
+font-family: Open Sans;
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+color: #101920;</string>
+    </property>
+    <property name="text">
+     <string>Auto Decrypt</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>414</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-family: Open Sans;
+font-style: normal;
+font-weight: 300px;
+font-size: 10px;
+/* identical to box height */
+
+
+color: #FCE417;
+</string>
+    </property>
+    <property name="text">
+     <string>encrypt first</string>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>label_3</zorder>
    <zorder>label_4</zorder>
@@ -387,12 +433,14 @@ p, li { white-space: pre-wrap; }
    <zorder>menu</zorder>
    <zorder>decrypt</zorder>
    <zorder>label_2</zorder>
-   <zorder>chipertext</zorder>
+   <zorder>ciphertext</zorder>
    <zorder>encrypt</zorder>
    <zorder>label_8</zorder>
    <zorder>label_9</zorder>
    <zorder>plaintext</zorder>
    <zorder>key</zorder>
+   <zorder>autodecrypt</zorder>
+   <zorder>label_7</zorder>
   </widget>
  </widget>
  <resources/>

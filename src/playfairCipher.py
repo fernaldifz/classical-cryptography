@@ -31,7 +31,16 @@ def decryptTextPFC(stringKey):
     plainText = reverseClean(plainText, jMemory)
 
     return plainText
-    
+
+def decryptTextPFCDiff(cipherText, stringKey):
+    plainText, key, bigramMemory = rulesSameRowsDec(cipherText, stringKey)
+    plainText, key, bigramMemory = rulesSameColsDec(plainText, key, bigramMemory)
+    plainText, key, bigramMemory = otherRules(plainText, key, bigramMemory)
+
+    plainText = reverseClean(plainText, [])
+
+    return plainText
+
 def matrixFactoryEnc(inputString):
     stringPFC = cleanTextAlphabet(inputString)
     jMemory = []; counter = 0
@@ -239,15 +248,27 @@ def toText(plainTextPFC):
 
     return text
 
+def saveCiphertext(cipherText):
+    file = open("../text/PFCCipher.txt", "w")
+    file.write(cipherText)
+    file.close()
+
+def readCipher():
+    file = open("../text/PFCMemory.txt", "r")
+    cipher = file.readlines()
+    file.close()
+
+    return cipher[0]
+
 def toFileTXT(cipherText, jMemory):
-    file = open("./text/PFCipher.txt", "w")
+    file = open("../text/PFCMemory.txt", "w")
     file.write(cipherText+'\n')
     for number in jMemory:
         file.write(str(number)+'\n')
     file.close()
 
 def readPFCipherFile():
-    file = open("./text/PFCipher.txt", "r")
+    file = open("../text/PFCMemory.txt", "r")
     arrLineFile = file.readlines()
     cipherText = ""; jMemory = []
 
@@ -262,12 +283,12 @@ def readPFCipherFile():
     return cipherText, jMemory
 
 def savePlainTextPFC(plainText):
-    file = open("./text/PFCText.txt", "w")
+    file = open("../text/PFCText.txt", "w")
     file.write(plainText)
     file.close()
 
 def readPlainText():
-    file = open("./text/PFCText.txt", "r")
+    file = open("../text/PFCText.txt", "r")
     plainText = file.readlines()
     file.close()
 

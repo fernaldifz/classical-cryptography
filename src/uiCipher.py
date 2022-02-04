@@ -1,9 +1,12 @@
 import sys
+import playfairCipher, vigenereCipher, extendedVigenereCipher, enigmaCipher, oneTimePad, readMode
 from os import curdir, environ
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QTabWidget, QWidget, QMessageBox, QPushButton, QFileDialog, QVBoxLayout
+
+
 
 class menuScreen(QDialog):
     def __init__(self):
@@ -46,7 +49,34 @@ class playfairCipherEnc(QDialog):
         loadUi("playfairCipherEnc.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.decrypt.clicked.connect(self.gotoPFCDecrypt)
+        self.encrypt.clicked.connect(self.encrypting)
+        self.savecipher.clicked.connect(self.saveCipher)
+        self.nospace.clicked.connect(self.displayNoSpace)
+        self.space5.clicked.connect(self.displaySpaceFive)
+
     
+    def encrypting(self):
+        plaintext = self.plaintext.toPlainText()
+        key = self.key.toPlainText()
+
+        newPlaintext, jMemory = playfairCipher.encryptTextPFC(plaintext, key)
+        cipher = playfairCipher.toText(newPlaintext)
+
+        self.ciphertext.setText(cipher)
+
+        playfairCipher.toFileTXT(cipher, jMemory)
+
+    def saveCipher(self):
+        playfairCipher.saveCiphertext(self.ciphertext.toPlainText())
+
+    def displayNoSpace(self):
+        modifiedString = readMode.noSpace(self.ciphertext.toPlainText())
+        self.ciphertext.setText(modifiedString)
+
+    def displaySpaceFive(self):
+        modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
+        self.ciphertext.setText(modifiedString)
+
     def gotoMenu(self):
         menu = menuScreen()
         widget.addWidget(menu)
@@ -63,7 +93,25 @@ class playfairCipherDec(QDialog):
         loadUi("playfairCipherDec.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoPFCEncrypt)
+        self.decrypt.clicked.connect(self.decrypting)
+        self.autodecrypt.clicked.connect(self.autoDecrypting)
     
+    def autoDecrypting(self):
+        self.ciphertext.setText(playfairCipher.readCipher())
+        key = self.key.toPlainText()
+
+        plain = playfairCipher.decryptTextPFC(key)
+
+        self.plaintext.setText(plain)
+
+    def decrypting(self):
+        cipher = self.ciphertext.toPlainText()
+        key = self.key.toPlainText()
+
+        plain = playfairCipher.decryptTextPFCDiff(cipher, key)
+
+        self.plaintext.setText(plain)
+
     def gotoMenu(self):
         menu = menuScreen()
         widget.addWidget(menu)

@@ -2,7 +2,7 @@ def noSpace(string):
     newString = ""
     upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     for char in string:
-        if char in upperCase:
+        if char in upperCase: 
             newString += char
     
     return newString
