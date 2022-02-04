@@ -18,6 +18,20 @@ def spaceFive(string):
 
     return newString
 
+def noSpaceDiff(string):
+    newString = ""
+    counter = 0
+    for index in range(0, len(string)):
+        if ((index%5) == counter) and (string[index] == " "):
+            counter += 1
+            if counter >= 5:
+                counter = 0
+        else:
+            newString += string[index]
+    
+    return newString
+
+# print(noSpaceDiff("akuci ntrap adamu asdaa asdaa asdaa asdas asdaa"))
 # string = noSpace("AKU CINTA PADAMU")
 # print(string)
 # print(spaceFive(string))

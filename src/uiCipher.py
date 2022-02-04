@@ -128,7 +128,36 @@ class vigenereCipherExtEnc(QDialog):
         loadUi("vigenereCipherExtEnc.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.decrypt.clicked.connect(self.gotoVigenereExtDec)
+        self.encrypt.clicked.connect(self.encrypting)
+        self.savecipher.clicked.connect(self.saveCipher)
+        self.nospace.clicked.connect(self.displayNoSpace)
+        self.space5.clicked.connect(self.displaySpaceFive)
     
+    def encrypting(self):
+        plaintext = self.plaintext.toPlainText()
+        key = self.key.toPlainText()
+
+        cipherKey = extendedVigenereCipher.generateKeyExtendedVige(plaintext, key)
+        extendedVigenereCipher.saveKey(cipherKey)
+        encryptedString = extendedVigenereCipher.encryptTextExtendedVige(plaintext, cipherKey)
+
+        self.ciphertext.setText(encryptedString)
+
+        extendedVigenereCipher.saveMemory(encryptedString)
+        
+
+    def saveCipher(self):
+        ciphertext = self.ciphertext.toPlainText()
+        extendedVigenereCipher.saveCipher(ciphertext)
+
+    def displayNoSpace(self):
+        modifiedString = readMode.noSpaceDiff(self.ciphertext.toPlainText())
+        self.ciphertext.setText(modifiedString)
+
+    def displaySpaceFive(self):
+        modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
+        self.ciphertext.setText(modifiedString)
+
     def gotoMenu(self):
         menu = menuScreen()
         widget.addWidget(menu)
@@ -145,7 +174,20 @@ class vigenereCipherExtDec(QDialog):
         loadUi("vigenereCipherExtDec.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoVigenereExtEnc)
+        self.decrypt.clicked.connect(self.decrypting)
+        cipher = extendedVigenereCipher.readMemory()
+        key = extendedVigenereCipher.readKey()
+        self.ciphertext.setText(cipher)
+        self.key.setText(key)
     
+    def decrypting(self):
+        cipher = self.ciphertext.toPlainText()
+        key = self.key.toPlainText() 
+
+        plain = extendedVigenereCipher.decryptTextExtendedVige(cipher,key)
+
+        self.plaintext.setText(plain)
+
     def gotoMenu(self):
         menu = menuScreen()
         widget.addWidget(menu)

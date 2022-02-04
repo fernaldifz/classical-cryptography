@@ -29,17 +29,49 @@ def decryptTextExtendedVige(encryptedString, key):
     return result
 
 def saveCipher(encryptedString):
-    file = open("./text/extendedVigenereCipher.txt", "w")
+    file = open("../text/extendedVigenereCipher.txt", "w",encoding="utf-8")
     file.write(encryptedString)
     file.close()
+
+def readCipher():
+    file = open("../text/extendedVigenereCipher.txt", "r",encoding="utf-8")
+    cipher = file.readlines()
+    file.close()
+
+    return cipher[0]
+
+def saveKey(generatedKey):
+    file = open("../text/extendedVigenereKey.txt", "w",encoding="utf-8")
+    file.write(generatedKey)
+    file.close()
+
+def readKey():
+    file = open("../text/extendedVigenereKey.txt", "r",encoding="utf-8")
+    string = file.readlines()
+    file.close()
+
+    return string[0]
+
+def saveMemory(cipher):
+    file = open("../text/extendedVigenereMemory.txt", "w",encoding="utf-8")
+    file.write(cipher)
+    file.close()
+
+def readMemory():
+    file = open("../text/extendedVigenereMemory.txt", "r",encoding="utf-8")
+    cipher = file.readlines()
+    file.close()
+
+    return cipher[0]
+
 
 def extendedVigenere(inputString, inputKey):
     key = generateKeyExtendedVige(inputString, inputKey)
     encryptedString = encryptTextExtendedVige(inputString, key)
 
     saveCipher(encryptedString)
-
+    print("key: " + key)
     print("hasil enkripsi: " + encryptedString)
     print("hasil dekripsi: " + decryptTextExtendedVige(encryptedString, key))
 
-# extendedVigenere("KEITB??!", "!(+)7")
+extendedVigenere("KEITB??!", "!(+)7")
