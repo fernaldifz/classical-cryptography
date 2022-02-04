@@ -1,3 +1,5 @@
+# Playfair Cipher (26 Alfabet)
+
 def generateKeyPlayfair(inputString):
     keyString = cleanKeyAlphabet(inputString)
     upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

@@ -186,7 +186,17 @@ color: #101920;
     </property>
     <item>
      <property name="text">
+      <string>I</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>II</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>III</string>
      </property>
     </item>
     <item>
@@ -220,7 +230,17 @@ color: #101920;
     </property>
     <item>
      <property name="text">
+      <string>I</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>II</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>III</string>
      </property>
     </item>
     <item>
@@ -254,7 +274,17 @@ color: #101920;
     </property>
     <item>
      <property name="text">
+      <string>I</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>II</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>III</string>
      </property>
     </item>
     <item>

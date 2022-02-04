@@ -24,7 +24,7 @@ def rotorPosition(machine):
     return machine.get_display()
 
 def saveEncryption(string):
-    file = open("./text/enigmaCipher.txt", "w")
+    file = open("../save file/enigmaCipher.txt", "w")
     file.write(string)
     file.close()
 

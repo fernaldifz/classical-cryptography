@@ -373,12 +373,58 @@ class OTPDec(QDialog):
         widget.setCurrentIndex(widget.currentIndex()+1)
 
 class enigmaCipherEnc(QDialog):
+    spacefive = True
+
     def __init__(self):
         super(enigmaCipherEnc, self).__init__()
         loadUi("enigmaCipherEnc.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.decrypt.clicked.connect(self.gotoEnigmaDec)
-    
+        self.encrypt.clicked.connect(self.encrypting)
+        self.savecipher_2.clicked.connect(self.saveCipher)
+        self.nospace_2.clicked.connect(self.displayNoSpace)
+        self.space5_2.clicked.connect(self.displaySpaceFive)
+
+    def encrypting(self):
+        reflector = self.reflector.currentText()
+        rotor_1 = self.rotor_1.currentText()
+        rotor_2 = self.rotor_2.currentText()
+        rotor_3 = self.rotor_3.currentText()
+        ring_1 = self.ring_1.currentText()
+        ring_2 = self.ring_2.currentText()
+        ring_3 = self.ring_3.currentText()
+        init_1 = self.init_1.currentText()
+        init_2 = self.init_2.currentText()
+        init_3 = self.init_3.currentText()
+
+        wheelOrder = rotor_1 + " " + rotor_2 + " " + rotor_3
+        ringSettings = [int(ring_1), int(ring_2), int(ring_3)]
+        initPosition = init_1 + init_2 + init_3
+
+        plaintext = self.plaintext.toPlainText()
+
+        machine = enigmaCipher.initEnigma(wheelOrder, ringSettings, reflector, 'AV BS CG DL FU HZ IN KM OW RX')
+
+        ciphertext = enigmaCipher.enigma(machine, initPosition, 'KCH', plaintext)
+
+        self.ciphertext.setText(ciphertext)
+        
+    def saveCipher(self):
+        ciphertext = self.ciphertext.toPlainText()
+        enigmaCipher.saveEncryption(ciphertext)
+
+    def displayNoSpace(self):
+        modifiedString = readMode.noSpace(self.ciphertext.toPlainText())
+        self.ciphertext.setText(modifiedString)
+        self.spacefive = True
+
+    def displaySpaceFive(self):
+        while self.spacefive:
+            modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
+            self.ciphertext.setText(modifiedString)
+            self.spacefive = False
+
+
     def gotoMenu(self):
         menu = menuScreen()
         widget.addWidget(menu)
@@ -395,6 +441,31 @@ class enigmaCipherDec(QDialog):
         loadUi("enigmaCipherDec.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoEnigmaEnc)
+        self.decrypt.clicked.connect(self.decrypting)
+
+    def decrypting(self):
+        reflector = self.reflector.currentText()
+        rotor_1 = self.rotor_1.currentText()
+        rotor_2 = self.rotor_2.currentText()
+        rotor_3 = self.rotor_3.currentText()
+        ring_1 = self.ring_1.currentText()
+        ring_2 = self.ring_2.currentText()
+        ring_3 = self.ring_3.currentText()
+        init_1 = self.init_1.currentText()
+        init_2 = self.init_2.currentText()
+        init_3 = self.init_3.currentText()
+
+        wheelOrder = rotor_1 + " " + rotor_2 + " " + rotor_3
+        ringSettings = [int(ring_1), int(ring_2), int(ring_3)]
+        initPosition = init_1 + init_2 + init_3
+
+        ciphertext = self.ciphertext.toPlainText()
+
+        machine = enigmaCipher.initEnigma(wheelOrder, ringSettings, reflector, 'AV BS CG DL FU HZ IN KM OW RX')
+
+        plaintext = enigmaCipher.enigma(machine, initPosition, 'KCH', ciphertext)
+
+        self.plaintext.setText(plaintext)
     
     def gotoMenu(self):
         menu = menuScreen()
