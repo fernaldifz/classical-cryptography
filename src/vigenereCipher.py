@@ -2,17 +2,18 @@
 
 def generateKeyVige(inputString, inputKey):
     filteredString = filterAlphabet(inputString)
-    if len(filteredString) == len(inputKey):
-        return inputKey
-    elif len(filteredString) < len(inputKey):
+    filteredKey = filterAlphabet(inputKey)
+    if len(filteredString) == len(filteredKey):
+        return filteredKey
+    elif len(filteredString) < len(filteredKey):
         key = ""
         for i in range(len(filteredString)):
-            key += inputKey[i]
+            key += filteredKey[i]
         return key
     else:
-        key = inputKey
-        for i in range(len(filteredString) - len(inputKey)):
-            key += inputKey[i % len(inputKey)]
+        key = filteredKey
+        for i in range(len(filteredString) - len(filteredKey)):
+            key += filteredKey[i % len(filteredKey)]
         return key
 
 def encryptTextVige(inputString, key):
