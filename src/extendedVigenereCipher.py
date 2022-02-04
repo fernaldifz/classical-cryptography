@@ -29,12 +29,12 @@ def decryptTextExtendedVige(encryptedString, key):
     return result
 
 def saveCipher(encryptedString):
-    file = open("../text/extendedVigenereCipher.txt", "w",encoding="utf-8")
+    file = open("../save file/extendedVigenereCipher.txt", "w",encoding="utf-8")
     file.write(encryptedString)
     file.close()
 
 def readCipher():
-    file = open("../text/extendedVigenereCipher.txt", "r",encoding="utf-8")
+    file = open("../save file/extendedVigenereCipher.txt", "r",encoding="utf-8")
     cipher = file.readlines()
     file.close()
 

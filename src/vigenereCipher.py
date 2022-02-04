@@ -50,12 +50,12 @@ def filterAlphabet(inputString):
     return alphabet
 
 def saveCipher(encryptedString):
-    file = open("../text/VigenereCipher.txt", "w")
+    file = open("../save file/VigenereCipher.txt", "w")
     file.write(encryptedString)
     file.close()
 
 def readCipher():
-    file = open("../text/VigenereCipher.txt", "r",encoding="utf-8")
+    file = open("../save file/VigenereCipher.txt", "r",encoding="utf-8")
     cipher = file.readlines()
     file.close()
 

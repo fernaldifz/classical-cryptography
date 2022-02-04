@@ -249,7 +249,7 @@ def toText(plainTextPFC):
     return text
 
 def saveCiphertext(cipherText):
-    file = open("../text/PFCCipher.txt", "w")
+    file = open("../save file/PFCCipher.txt", "w")
     file.write(cipherText)
     file.close()
 
