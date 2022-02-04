@@ -57,7 +57,6 @@ class playfairCipherEnc(QDialog):
         self.nospace.clicked.connect(self.displayNoSpace)
         self.space5.clicked.connect(self.displaySpaceFive)
 
-    
     def encrypting(self):
         plaintext = self.plaintext.toPlainText()
         key = self.key.toPlainText()
@@ -148,10 +147,7 @@ class vigenereCipherExtEnc(QDialog):
         extendedVigenereCipher.saveKey(cipherKey)
         encryptedString = extendedVigenereCipher.encryptTextExtendedVige(plaintext, cipherKey)
 
-        self.ciphertext.setText(encryptedString)
-
-        extendedVigenereCipher.saveMemory(encryptedString)
-        
+        self.ciphertext.setText(encryptedString)        
 
     def saveCipher(self):
         ciphertext = self.ciphertext.toPlainText()
@@ -185,16 +181,13 @@ class vigenereCipherExtDec(QDialog):
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoVigenereExtEnc)
         self.decrypt.clicked.connect(self.decrypting)
-        cipher = extendedVigenereCipher.readMemory()
-        key = extendedVigenereCipher.readKey()
-        self.ciphertext.setText(cipher)
-        self.key.setText(key)
     
     def decrypting(self):
         cipher = self.ciphertext.toPlainText()
-        key = self.key.toPlainText() 
+        key = self.key.toPlainText()
+        generatedKey = extendedVigenereCipher.generateKeyExtendedVige(cipher, key)
 
-        plain = extendedVigenereCipher.decryptTextExtendedVige(cipher,key)
+        plain = extendedVigenereCipher.decryptTextExtendedVige(cipher,generatedKey)
 
         self.plaintext.setText(plain)
 
@@ -265,16 +258,17 @@ class vigenereCipherDec(QDialog):
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoVigenereEnc)
         self.decrypt.clicked.connect(self.decrypting)
-        cipher = vigenereCipher.readMemory()
-        key = vigenereCipher.readKey()
-        self.ciphertext.setText(cipher)
-        self.key.setText(key)
+        # cipher = vigenereCipher.readMemory()
+        # key = vigenereCipher.readKey()
+        # self.ciphertext.setText(cipher)
+        # self.key.setText(key)
     
     def decrypting(self):
         cipher = self.ciphertext.toPlainText()
-        key = self.key.toPlainText() 
+        key = self.key.toPlainText()
+        generatedKey = vigenereCipher.generateKeyVige(cipher, key)
 
-        plain = vigenereCipher.decryptTextVige(cipher,key)
+        plain = vigenereCipher.decryptTextVige(cipher,generatedKey)
 
         self.plaintext.setText(plain)
     
@@ -349,16 +343,16 @@ class OTPDec(QDialog):
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoOTPEnc)
         self.decrypt.clicked.connect(self.decrypting)
-        cipher = oneTimePad.readMemory()
+        # cipher = oneTimePad.readMemory()
         key = oneTimePad.readKey()
-        self.ciphertext.setText(cipher)
+        # self.ciphertext.setText(cipher)
         self.key.setText(key)
     
     def decrypting(self):
         cipher = self.ciphertext.toPlainText()
-        key = self.key.toPlainText() 
-
-        plain = oneTimePad.decryptTextOTP(cipher,key)
+        key = self.key.toPlainText()
+        
+        plain = oneTimePad.decryptTextOTP(cipher, key)
 
         self.plaintext.setText(plain)
     
