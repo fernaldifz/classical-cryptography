@@ -74,4 +74,4 @@ def extendedVigenere(inputString, inputKey):
     print("hasil enkripsi: " + encryptedString)
     print("hasil dekripsi: " + decryptTextExtendedVige(encryptedString, key))
 
-extendedVigenere("KEITB??!", "!(+)7")
+# extendedVigenere("KEITB??!", "!(+)7")

@@ -189,7 +189,7 @@ color: #101920;</string>
      <string>Decrypt !</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="chipertext">
+   <widget class="QTextEdit" name="ciphertext">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -387,7 +387,7 @@ p, li { white-space: pre-wrap; }
    <zorder>menu</zorder>
    <zorder>decrypt</zorder>
    <zorder>label_2</zorder>
-   <zorder>chipertext</zorder>
+   <zorder>ciphertext</zorder>
    <zorder>encrypt</zorder>
    <zorder>label_8</zorder>
    <zorder>label_9</zorder>

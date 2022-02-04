@@ -1,3 +1,4 @@
+from pydoc import plain
 import sys
 import playfairCipher, vigenereCipher, extendedVigenereCipher, enigmaCipher, oneTimePad, readMode
 from os import curdir, environ
@@ -44,6 +45,8 @@ class menuScreen(QDialog):
         widget.setCurrentIndex(widget.currentIndex()+1)
     
 class playfairCipherEnc(QDialog):
+    spacefive = True
+
     def __init__(self):
         super(playfairCipherEnc, self).__init__()
         loadUi("playfairCipherEnc.ui", self)
@@ -72,10 +75,13 @@ class playfairCipherEnc(QDialog):
     def displayNoSpace(self):
         modifiedString = readMode.noSpace(self.ciphertext.toPlainText())
         self.ciphertext.setText(modifiedString)
+        self.spacefive = True
 
     def displaySpaceFive(self):
-        modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
-        self.ciphertext.setText(modifiedString)
+        while self.spacefive:
+            modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
+            self.ciphertext.setText(modifiedString)
+            self.spacefive = False
 
     def gotoMenu(self):
         menu = menuScreen()
@@ -123,6 +129,7 @@ class playfairCipherDec(QDialog):
         widget.setCurrentIndex(widget.currentIndex()+1)
 
 class vigenereCipherExtEnc(QDialog):
+    spaceFive = True
     def __init__(self):
         super(vigenereCipherExtEnc, self).__init__()
         loadUi("vigenereCipherExtEnc.ui", self)
@@ -153,10 +160,13 @@ class vigenereCipherExtEnc(QDialog):
     def displayNoSpace(self):
         modifiedString = readMode.noSpaceDiff(self.ciphertext.toPlainText())
         self.ciphertext.setText(modifiedString)
+        self.spacefive = True
 
     def displaySpaceFive(self):
-        modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
-        self.ciphertext.setText(modifiedString)
+        while self.spacefive:
+            modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
+            self.ciphertext.setText(modifiedString)
+            self.spacefive = False
 
     def gotoMenu(self):
         menu = menuScreen()
@@ -199,11 +209,44 @@ class vigenereCipherExtDec(QDialog):
         widget.setCurrentIndex(widget.currentIndex()+1)
 
 class vigenereCipherEnc(QDialog):
+    spacefive = True
+
     def __init__(self):
         super(vigenereCipherEnc, self).__init__()
         loadUi("vigenereCipherEnc.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.decrypt.clicked.connect(self.gotoVigenereDec)
+        self.encrypt.clicked.connect(self.encrypting)
+        self.savecipher.clicked.connect(self.saveCipher)
+        self.nospace.clicked.connect(self.displayNoSpace)
+        self.space5.clicked.connect(self.displaySpaceFive)
+    
+    def encrypting(self):
+        plaintext = self.plaintext.toPlainText()
+        key = self.key.toPlainText()
+
+        cipherKey = vigenereCipher.generateKeyVige(plaintext, key)
+        vigenereCipher.saveKey(cipherKey)
+        encryptedString = vigenereCipher.encryptTextVige(plaintext, cipherKey)
+
+        self.ciphertext.setText(encryptedString)
+
+        vigenereCipher.saveMemory(encryptedString)
+        
+    def saveCipher(self):
+        ciphertext = self.ciphertext.toPlainText()
+        vigenereCipher.saveCipher(ciphertext)
+
+    def displayNoSpace(self):
+        modifiedString = readMode.noSpace(self.ciphertext.toPlainText())
+        self.ciphertext.setText(modifiedString)
+        self.spacefive = True
+
+    def displaySpaceFive(self):
+        while self.spacefive:
+            modifiedString = readMode.spaceFive(self.ciphertext.toPlainText())
+            self.ciphertext.setText(modifiedString)
+            self.spacefive = False
     
     def gotoMenu(self):
         menu = menuScreen()
@@ -221,6 +264,19 @@ class vigenereCipherDec(QDialog):
         loadUi("vigenereCipherDec.ui", self)
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoVigenereEnc)
+        self.decrypt.clicked.connect(self.decrypting)
+        cipher = vigenereCipher.readMemory()
+        key = vigenereCipher.readKey()
+        self.ciphertext.setText(cipher)
+        self.key.setText(key)
+    
+    def decrypting(self):
+        cipher = self.ciphertext.toPlainText()
+        key = self.key.toPlainText() 
+
+        plain = vigenereCipher.decryptTextVige(cipher,key)
+
+        self.plaintext.setText(plain)
     
     def gotoMenu(self):
         menu = menuScreen()

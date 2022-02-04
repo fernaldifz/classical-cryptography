@@ -50,8 +50,39 @@ def filterAlphabet(inputString):
     return alphabet
 
 def saveCipher(encryptedString):
-    file = open("./text/VigenereCipher.txt", "w")
+    file = open("../text/VigenereCipher.txt", "w")
     file.write(encryptedString)
     file.close()
 
-# vigenereStandard("thisplaintext", "sony")
+def readCipher():
+    file = open("../text/VigenereCipher.txt", "r",encoding="utf-8")
+    cipher = file.readlines()
+    file.close()
+
+    return cipher[0]
+
+def saveKey(generatedKey):
+    file = open("../text/VigenereKey.txt", "w",encoding="utf-8")
+    file.write(generatedKey)
+    file.close()
+
+def readKey():
+    file = open("../text/VigenereKey.txt", "r",encoding="utf-8")
+    string = file.readlines()
+    file.close()
+
+    return string[0]
+
+def saveMemory(cipher):
+    file = open("../text/VigenereMemory.txt", "w",encoding="utf-8")
+    file.write(cipher)
+    file.close()
+
+def readMemory():
+    file = open("../text/VigenereMemory.txt", "r",encoding="utf-8")
+    cipher = file.readlines()
+    file.close()
+
+    return cipher[0]
+
+vigenereStandard("thisplaintext", "sony")
