@@ -24,24 +24,15 @@ def encryptTextPFC(stringText, stringKey):
 
     return plainText, jMemory
 
-def decryptTextPFC(stringKey):
-    cipherText, jMemory = readPFCipherFile()
+def decryptTextPFC(cipherText, stringKey):
     plainText, key, bigramMemory = rulesSameRowsDec(cipherText, stringKey)
     plainText, key, bigramMemory = rulesSameColsDec(plainText, key, bigramMemory)
     plainText, key, bigramMemory = otherRules(plainText, key, bigramMemory)
 
-    plainText = reverseClean(plainText, jMemory)
+    plainText = reverseClean(plainText)
 
     return plainText
 
-def decryptTextPFCDiff(cipherText, stringKey):
-    plainText, key, bigramMemory = rulesSameRowsDec(cipherText, stringKey)
-    plainText, key, bigramMemory = rulesSameColsDec(plainText, key, bigramMemory)
-    plainText, key, bigramMemory = otherRules(plainText, key, bigramMemory)
-
-    plainText = reverseClean(plainText, [])
-
-    return plainText
 
 def matrixFactoryEnc(inputString):
     stringPFC = cleanTextAlphabet(inputString)
@@ -126,12 +117,9 @@ def cleanTextAlphabet(inputString):
 
     return cleanAlphabet
 
-def reverseClean(inputMatrix, jMemory):
+def reverseClean(inputMatrix):
     cleanText = ""
 
-    for index in jMemory:
-        inputMatrix[int(index) // 2][int(index) % 2] = 'J'
-    
     for row in range(0, len(inputMatrix)):
         for col in range(0,1):
             if (inputMatrix[row][col+1] == 'X') and (row != (len(inputMatrix)-1)):
@@ -139,10 +127,7 @@ def reverseClean(inputMatrix, jMemory):
                     inputMatrix[row][col+1] = ''
     
     cipherText = toText(inputMatrix)
-
-    plainText = readPlainText()
-
-    for index in range(0,len(plainText)):
+    for index in range(0,len(cipherText)):
         cleanText += cipherText[index]
 
     return cleanText

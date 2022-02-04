@@ -99,21 +99,12 @@ class playfairCipherDec(QDialog):
         self.menu.clicked.connect(self.gotoMenu)
         self.encrypt.clicked.connect(self.gotoPFCEncrypt)
         self.decrypt.clicked.connect(self.decrypting)
-        self.autodecrypt.clicked.connect(self.autoDecrypting)
     
-    def autoDecrypting(self):
-        self.ciphertext.setText(playfairCipher.readCipher())
-        key = self.key.toPlainText()
-
-        plain = playfairCipher.decryptTextPFC(key)
-
-        self.plaintext.setText(plain)
-
     def decrypting(self):
         cipher = self.ciphertext.toPlainText()
         key = self.key.toPlainText()
 
-        plain = playfairCipher.decryptTextPFCDiff(cipher, key)
+        plain = playfairCipher.decryptTextPFC(cipher, key)
 
         self.plaintext.setText(plain)
 
