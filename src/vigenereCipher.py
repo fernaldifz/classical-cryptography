@@ -85,4 +85,4 @@ def readMemory():
 
     return cipher[0]
 
-vigenereStandard("thisplaintext", "sony")
+# vigenereStandard("thisplaintext", "sony")

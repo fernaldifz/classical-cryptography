@@ -98,7 +98,7 @@ color: #FCE417;
     <property name="geometry">
      <rect>
       <x>77</x>
-      <y>263</y>
+      <y>290</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -122,7 +122,7 @@ color: #FCE417;
     <property name="geometry">
      <rect>
       <x>77</x>
-      <y>373</y>
+      <y>400</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -171,7 +171,7 @@ color: #101920;
     <property name="geometry">
      <rect>
       <x>199</x>
-      <y>373</y>
+      <y>400</y>
       <width>83</width>
       <height>28</height>
      </rect>
@@ -189,7 +189,7 @@ color: #101920;</string>
      <string>Decrypt !</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="chipertext">
+   <widget class="QTextEdit" name="ciphertext">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -273,7 +273,7 @@ color: #101920;
     <property name="geometry">
      <rect>
       <x>179</x>
-      <y>263</y>
+      <y>290</y>
       <width>444</width>
       <height>85</height>
      </rect>
@@ -292,7 +292,7 @@ border-radius: 2px;</string>
       <x>179</x>
       <y>212</y>
       <width>444</width>
-      <height>26</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -307,7 +307,7 @@ border-radius: 2px;</string>
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>263</y>
+      <y>290</y>
       <width>425</width>
       <height>85</height>
      </rect>
@@ -347,7 +347,7 @@ p, li { white-space: pre-wrap; }
       <x>190</x>
       <y>212</y>
       <width>425</width>
-      <height>26</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -387,7 +387,7 @@ p, li { white-space: pre-wrap; }
    <zorder>menu</zorder>
    <zorder>decrypt</zorder>
    <zorder>label_2</zorder>
-   <zorder>chipertext</zorder>
+   <zorder>ciphertext</zorder>
    <zorder>encrypt</zorder>
    <zorder>label_8</zorder>
    <zorder>label_9</zorder>

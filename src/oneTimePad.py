@@ -4,12 +4,12 @@ import string
 def createKeyOTP():
     length = 50000
     key = ''.join((random.choice(string.ascii_lowercase) for x in range(length)))
-    file = open("./text/OTPKey.txt", "w")
+    file = open("../text/OTPKey.txt", "w")
     file.write(key)
     file.close()
 
 def getKeyOTP():
-    with open('./text/OTPKey.txt', 'r') as file:
+    with open('../text/OTPKey.txt', 'r') as file:
         data = file.read().replace('\n', '')
     file.close()
     return data
@@ -38,7 +38,7 @@ def OTP(inputString):
     encryptedString = encryptTextOTP(inputString, key)
 
     saveCipher(encryptedString)
-
+    print(key)
     print("hasil enkripsi: " + encryptedString)
     print("hasil dekripsi: " + decryptTextOTP(encryptedString, key))
 
@@ -50,8 +50,40 @@ def filterAlphabet(inputString):
     return alphabet
 
 def saveCipher(encryptedString):
-    file = open("./text/OTPCipher.txt", "w")
+    file = open("../text/OTPCipher.txt", "w")
     file.write(encryptedString)
     file.close()
 
-# OTP("saya senang dan bahagia berkuliah di ITB")
+def readCipher():
+    file = open("../text/OTPCipher.txt", "r",encoding="utf-8")
+    cipher = file.readlines()
+    file.close()
+
+    return cipher[0]
+
+def saveKey(generatedKey):
+    file = open("../text/OTPKeys.txt", "w",encoding="utf-8")
+    file.write(generatedKey)
+    file.close()
+
+def readKey():
+    file = open("../text/OTPKeys.txt", "r",encoding="utf-8")
+    string = file.readlines()
+    file.close()
+
+    return string[0]
+
+def saveMemory(cipher):
+    file = open("../text/OTPMemory.txt", "w",encoding="utf-8")
+    file.write(cipher)
+    file.close()
+
+def readMemory():
+    file = open("../text/OTPMemory.txt", "r",encoding="utf-8")
+    cipher = file.readlines()
+    file.close()
+
+    return cipher[0]
+
+
+# OTP("aku jauh")
